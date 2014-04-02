@@ -1,0 +1,7 @@
+duckduckgo2==0.242
+wolframalpha==1.0.2
+requests==2.2.1
+lxml==3.3.3
+pytest=2.5.2
+ipdb==0.8
+ipython==1.2.1
