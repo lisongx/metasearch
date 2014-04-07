@@ -18,4 +18,4 @@ class YandexEngine(EngineBase):
         if raw_data.error is None:
             return raw_data.items
         else:
-            raise raw_data.error.description
+            return []
