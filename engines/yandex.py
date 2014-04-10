@@ -7,8 +7,11 @@ class YandexEngine(EngineBase):
        * need init with a username and api_key
     """
 
-    def __init__(self, configs={}):
-        super(YandexEngine, self).__init__(configs)
+    # def __init__(self, configs={}):
+    #     super(YandexEngine, self).__init__(configs)
+    #     self.yasearch = YaSearch(self.username, self.api_key)
+
+    def config(self):
         self.yasearch = YaSearch(self.username, self.api_key)
 
     def send_request(self, query, **kwargs):
