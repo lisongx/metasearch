@@ -13,7 +13,7 @@ class EngineBase(object):
         self.config()
 
     def search(self, query, **kwargs):
-        raw_data = self.send_request(query, **kwargs)
+        raw_data = self._send_request(query, **kwargs)
         return self.clean_raw_data(raw_data)
     
     # configis
@@ -21,7 +21,7 @@ class EngineBase(object):
         pass
 
     # params clean
-    def send_request(self, query, **kwargs):
+    def _send_request(self, query, **kwargs):
         pass
 
     def clean_raw_data(self, raw_data):
@@ -31,3 +31,7 @@ class EngineBase(object):
 class RequestEngine(EngineBase):
     pass
     """base class for engines that we request a url"""
+
+
+class ResultItemBase(object):
+    pass

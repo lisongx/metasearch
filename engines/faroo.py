@@ -1,4 +1,4 @@
-from .base import RequestEngine
+from .base import RequestEngine,  ResultItemBase
 
 import requests
 
@@ -10,7 +10,7 @@ class FarooEngine(RequestEngine):
 
     REQUEST_PATH = "http://www.faroo.com/api"
 
-    def send_request(self, query, **kwargs):
+    def _send_request(self, query, **kwargs):
         kwargs.update({
             "key": self.api_key,
             "q": query,
@@ -25,4 +25,13 @@ class FarooEngine(RequestEngine):
         return r.json()
 
     def clean_raw_data(self, raw_data):
-        return raw_data["results"]
+        results = [FarooResultItem(item) for item in raw_data["results"]]
+        return results
+
+
+class FarooResultItem(ResultItemBase):
+    def __init__(self, data):
+        self.url = data["url"]
+        self.title = data["title"]
+        self.image = data["iurl"]
+        self.description = u""

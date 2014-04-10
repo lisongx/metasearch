@@ -1,4 +1,4 @@
-from .base import EngineBase 
+from .base import EngineBase, ResultItemBase
 from yandexsearch import YaSearch
 
 
@@ -10,11 +10,19 @@ class YandexEngine(EngineBase):
     def config(self):
         self.yasearch = YaSearch(self.username, self.api_key)
 
-    def send_request(self, query, **kwargs):
+    def _send_request(self, query, **kwargs):
         return self.yasearch.search(query, **kwargs)
 
     def clean_raw_data(self, raw_data):
         if raw_data.error is None:
-            return raw_data.items
+            results = [YandexResultItem(item) for item in raw_data.items]
+            return results
         else:
             return []
+
+
+class YandexResultItem(ResultItemBase):
+    def __init__(self, data):
+        self.url = data.url
+        self.title = data.title
+        self.description = u""

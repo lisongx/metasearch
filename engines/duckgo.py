@@ -10,7 +10,7 @@ class DuckgoEngine(EngineBase):
         'DISAMBIGUATION': u'disambiguation'
     }
 
-    def send_request(self, query, **kwargs):
+    def _send_request(self, query, **kwargs):
         return duckduckgo.query(query)
 
     def clean_raw_data(self, raw_data):
