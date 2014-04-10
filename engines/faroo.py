@@ -16,6 +16,11 @@ class FarooEngine(RequestEngine):
             "q": query,
             "src": "web"
         })
+
+        if "limit" in kwargs:
+            kwargs["length"] = kwargs["limit"]
+            kwargs.pop("limit")
+
         r = requests.get(self.REQUEST_PATH, params=kwargs)
         return r.json()
 

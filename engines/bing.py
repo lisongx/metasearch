@@ -7,14 +7,13 @@ class BingEngine(EngineBase):
        * need init with a api_key
     """
 
-    # def __init__(self, configs={}):
-    #     super(BingEngine, self).__init__(configs)
-    #     self.bing = BingSearch(self.api_key)
-
     def config(self):
         self.bing = BingSearch(self.api_key)
 
     def send_request(self, query, **kwargs):
+        if "start" in kwargs:
+            kwargs["offset"] = kwargs.pop("start")
+
         return self.bing.search(query, **kwargs)
 
     def clean_raw_data(self, raw_data):
