@@ -25,4 +25,4 @@ class YandexResultItem(ResultItemBase):
     def __init__(self, data):
         self.url = data.url
         self.title = data.title
-        self.description = u""
+        self.description = data.snippt

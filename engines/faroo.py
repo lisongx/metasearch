@@ -34,4 +34,4 @@ class FarooResultItem(ResultItemBase):
         self.url = data["url"]
         self.title = data["title"]
         self.image = data["iurl"]
-        self.description = u""
+        self.description = data["kwic"]
