@@ -2,7 +2,7 @@ import os, unittest
 from engines.yandex import YandexEngine
 
 
-class TestFarooEngine(unittest.TestCase):
+class TestYandexEngine(unittest.TestCase):
 
     def setUp(self):
         self.engine = YandexEngine(configs={
@@ -19,7 +19,12 @@ class TestFarooEngine(unittest.TestCase):
         item = self.results[0]
         self.assertTrue(hasattr(item, "title"))
         self.assertTrue(hasattr(item, "url"))
-        self.assertTrue(hasattr(item, "description"))        
+        self.assertTrue(hasattr(item, "description"))
+        self.assertTrue(item.source, 'yandex')
+
+    def test_result_priority(self):
+        item = self.results[3]
+        self.assertEquals(item.priority, 3)
 
 
 if __name__ == '__main__':

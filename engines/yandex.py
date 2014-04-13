@@ -22,7 +22,10 @@ class YandexEngine(EngineBase):
 
 
 class YandexResultItem(ResultItemBase):
+    source = "yandex"
+
     def __init__(self, data):
         self.url = data.url
         self.title = data.title
-        self.description = data.snippt
+        self.description = data.snippet
+        self.image = None

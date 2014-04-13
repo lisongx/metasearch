@@ -1,4 +1,4 @@
-from .base import EngineBase
+from .base import EngineBase, ResultItemBase
 from bingsearch import BingSearch
 
 
@@ -16,4 +16,15 @@ class BingEngine(EngineBase):
         return self.bing.search(query, **kwargs)
 
     def clean_raw_data(self, raw_data):
-        return raw_data.results
+        results = [BingResultItem(item) for item in raw_data.results]
+        return results
+
+
+class BingResultItem(ResultItemBase):
+    source = "bing"
+
+    def __init__(self, data):
+        self.url = data.url
+        self.title = data.title
+        self.description = data.description
+        self.image = None

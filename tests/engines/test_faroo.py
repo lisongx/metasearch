@@ -19,6 +19,11 @@ class TestFarooEngine(unittest.TestCase):
         self.assertTrue(hasattr(item, "title"))
         self.assertTrue(hasattr(item, "url"))
         self.assertTrue(hasattr(item, "description"))        
+        self.assertTrue(item.source, 'faroo')
+
+    def test_result_priority(self):
+        item = self.results[1]
+        self.assertEquals(item.priority, 1)
 
     def test_count(self):
         results = self.engine.search("python", limit=5)

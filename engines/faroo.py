@@ -30,6 +30,8 @@ class FarooEngine(RequestEngine):
 
 
 class FarooResultItem(ResultItemBase):
+    source = "faroo"
+
     def __init__(self, data):
         self.url = data["url"]
         self.title = data["title"]

@@ -14,7 +14,9 @@ class EngineBase(object):
 
     def search(self, query, **kwargs):
         raw_data = self._send_request(query, **kwargs)
-        return self.clean_raw_data(raw_data)
+        cleaned_data = self.clean_raw_data(raw_data)
+        results = self.fill_priority(cleaned_data)
+        return results
     
     # configis
     def config(self):
@@ -27,6 +29,12 @@ class EngineBase(object):
     def clean_raw_data(self, raw_data):
         return raw_data
 
+    def fill_priority(self, data):
+        # 0 means biggest
+        for i, item in enumerate(data):
+            item.priority = i
+        return data
+
 
 class RequestEngine(EngineBase):
     pass
@@ -34,4 +42,9 @@ class RequestEngine(EngineBase):
 
 
 class ResultItemBase(object):
-    pass
+    source = "base"
+
+    def __new__(cls, *args, **kwargs):
+            obj = object.__new__(cls, *args, **kwargs)
+            obj.source = cls.source
+            return obj
