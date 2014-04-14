@@ -1,5 +1,5 @@
 import os, unittest
-from engines.faroo import FarooEngine
+from engines import FarooEngine
 
 
 class TestFarooEngine(unittest.TestCase):

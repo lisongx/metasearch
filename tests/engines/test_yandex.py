@@ -1,5 +1,5 @@
 import os, unittest
-from engines.yandex import YandexEngine
+from engines import YandexEngine
 
 
 class TestYandexEngine(unittest.TestCase):

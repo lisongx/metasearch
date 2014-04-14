@@ -1,5 +1,5 @@
 import unittest
-from engines.duckgo import DuckgoEngine
+from engines import DuckgoEngine
 
 
 class TestDuckgoEngine(unittest.TestCase):

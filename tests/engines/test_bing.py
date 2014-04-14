@@ -1,5 +1,5 @@
 import os, unittest
-from engines.bing import BingEngine
+from engines import BingEngine
 
 
 class TestBingEngine(unittest.TestCase):
