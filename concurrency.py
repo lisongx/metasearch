@@ -24,7 +24,7 @@ yandex = YandexEngine(configs={
             "api_key": os.environ["YANDEX_API_KEY"],
             "username": os.environ["YANDEX_USER_NAME"]
         })
-        
+
 engines = [faroo, duckgo, yandex]
 
 start = time.time()

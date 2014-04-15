@@ -14,7 +14,7 @@ class EngineBase(object):
 
     def search(self, query, **kwargs):
         raw_data = self._send_request(query, **kwargs)
-        cleaned_data = self.clean_raw_data(raw_data)
+        cleaned_data = self._clean_raw_data(raw_data)
         results = self.fill_priority(cleaned_data)
         return results
     
@@ -26,7 +26,7 @@ class EngineBase(object):
     def _send_request(self, query, **kwargs):
         pass
 
-    def clean_raw_data(self, raw_data):
+    def _clean_raw_data(self, raw_data):
         return raw_data
 
     def fill_priority(self, data):

@@ -13,7 +13,7 @@ class YandexEngine(EngineBase):
     def _send_request(self, query, **kwargs):
         return self.yasearch.search(query, **kwargs)
 
-    def clean_raw_data(self, raw_data):
+    def _clean_raw_data(self, raw_data):
         if raw_data.error is None:
             results = [YandexResultItem(item) for item in raw_data.items]
             return results

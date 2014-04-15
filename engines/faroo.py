@@ -24,7 +24,7 @@ class FarooEngine(RequestEngine):
         r = requests.get(self.REQUEST_PATH, params=kwargs)
         return r.json()
 
-    def clean_raw_data(self, raw_data):
+    def _clean_raw_data(self, raw_data):
         results = [FarooResultItem(item) for item in raw_data["results"]]
         return results
 
