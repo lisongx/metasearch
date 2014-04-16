@@ -5,6 +5,8 @@ from .base import EngineBase, ResultItemBase
 
 class DuckgoEngine(EngineBase):
 
+    name = "duckduckgo"
+
     TYPES = {
         'ANSWER': u'answer',
         'DISAMBIGUATION': u'disambiguation'
@@ -28,7 +30,8 @@ class DuckgoEngine(EngineBase):
 
 
 class DuckGoResultItem(ResultItemBase):
-    source = "duckduckgo"
+
+    source = DuckgoEngine
 
     def __init__(self, data):
         # test if the element is  an actual result

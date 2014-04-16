@@ -7,7 +7,7 @@ class FarooEngine(RequestEngine):
     """FAROO is a universal web search engine based on peer-to-peer technology.
        * need init with a api_key
     """
-
+    name = "faroo"
     REQUEST_PATH = "http://www.faroo.com/api"
 
     def _send_request(self, query, **kwargs):
@@ -30,7 +30,7 @@ class FarooEngine(RequestEngine):
 
 
 class FarooResultItem(ResultItemBase):
-    source = "faroo"
+    source = FarooEngine
 
     def __init__(self, data):
         self.url = data["url"]

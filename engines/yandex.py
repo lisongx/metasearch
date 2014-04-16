@@ -6,6 +6,7 @@ class YandexEngine(EngineBase):
     """Yandex.
        * need init with a username and api_key
     """
+    name = "yandex"
 
     def config(self):
         self.yasearch = YaSearch(self.username, self.api_key)
@@ -22,7 +23,8 @@ class YandexEngine(EngineBase):
 
 
 class YandexResultItem(ResultItemBase):
-    source = "yandex"
+
+    source = YandexEngine
 
     def __init__(self, data):
         self.url = data.url

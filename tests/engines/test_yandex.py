@@ -20,7 +20,7 @@ class TestYandexEngine(unittest.TestCase):
         self.assertTrue(hasattr(item, "title"))
         self.assertTrue(hasattr(item, "url"))
         self.assertTrue(hasattr(item, "description"))
-        self.assertTrue(item.source, 'yandex')
+        self.assertTrue(item.source.name, 'yandex')
 
     def test_result_priority(self):
         item = self.results[3]

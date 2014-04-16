@@ -6,6 +6,8 @@ class BingEngine(EngineBase):
     """Bing.
        * need init with a api_key
     """
+    name = "bing"
+
     def config(self):
         self.bing = BingSearch(self.api_key)
 
@@ -21,7 +23,8 @@ class BingEngine(EngineBase):
 
 
 class BingResultItem(ResultItemBase):
-    source = "bing"
+
+    source = BingEngine
 
     def __init__(self, data):
         self.url = data.url

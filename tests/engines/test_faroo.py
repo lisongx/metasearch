@@ -17,7 +17,7 @@ class TestFarooEngine(unittest.TestCase):
         self.assertTrue(hasattr(item, "title"))
         self.assertTrue(hasattr(item, "url"))
         self.assertTrue(hasattr(item, "description"))        
-        self.assertTrue(item.source, 'faroo')
+        self.assertTrue(item.source.name, 'faroo')
 
     def test_result_priority(self):
         item = self.results[1]
