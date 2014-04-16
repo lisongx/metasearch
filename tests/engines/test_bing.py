@@ -5,9 +5,7 @@ from engines import BingEngine
 class TestBingEngine(unittest.TestCase):
 
     def setUp(self):
-        self.engine = BingEngine(configs={
-            "api_key": os.environ["BING_API_KEY"]
-        })
+        self.engine = BingEngine(api_key=os.environ["BING_API_KEY"])
         self.results = self.engine.search("python")
 
     def test_request(self):

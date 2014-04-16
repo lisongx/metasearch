@@ -5,10 +5,10 @@ from engines import YandexEngine
 class TestYandexEngine(unittest.TestCase):
 
     def setUp(self):
-        self.engine = YandexEngine(configs={
-            "api_key": os.environ["YANDEX_API_KEY"],
-            "username": os.environ["YANDEX_USER_NAME"]
-        })
+        self.engine = YandexEngine(
+            api_key=os.environ["YANDEX_API_KEY"],
+            username=os.environ["YANDEX_USER_NAME"]
+        )
         self.results = self.engine.search("python")
 
     def test_request(self):

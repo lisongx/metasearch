@@ -1,6 +1,6 @@
 import duckduckgo
 
-from .base import EngineBase
+from .base import EngineBase, ResultItemBase
 
 
 class DuckgoEngine(EngineBase):
@@ -14,9 +14,33 @@ class DuckgoEngine(EngineBase):
         return duckduckgo.query(query)
 
     def _clean_raw_data(self, raw_data):
+        results = []
+
         if raw_data.type == self.TYPES['ANSWER']:
-            return raw_data.results
+            results =  raw_data.results
         elif raw_data.type == self.TYPES['DISAMBIGUATION']:
-            return raw_data.related
+            results = raw_data.related
         else:
             return []
+
+        results  = [DuckGoResultItem(item) for item in results]
+        return filter(lambda x: x.is_result, results)
+
+
+class DuckGoResultItem(ResultItemBase):
+    source = "duckduckgo"
+
+    def __init__(self, data):
+        # test if the element is  an actual result
+        if hasattr(data, 'text') and hasattr(data, 'url'):
+            self.url = data.text
+            self.title = data.url
+            self.description = None
+            try:
+                self.image = data.icon.url
+            except Exception as e:
+                self.image = None
+            # mark the result flag
+            self.is_result = True
+        else:
+            self.is_result = False

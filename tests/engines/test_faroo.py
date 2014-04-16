@@ -5,9 +5,7 @@ from engines import FarooEngine
 class TestFarooEngine(unittest.TestCase):
 
     def setUp(self):
-        self.engine = FarooEngine(configs={
-            "api_key": os.environ["FAROO_API_KEY"]
-        })
+        self.engine = FarooEngine(api_key=os.environ["FAROO_API_KEY"])
         self.results = self.engine.search("python")
 
     def test_request(self):

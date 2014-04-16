@@ -6,9 +6,9 @@ import requests
 class EngineBase(object):
     _metaclass__ = ABCMeta
 
-    def __init__(self, configs={}):
+    def __init__(self, **kwargs):
         super(EngineBase, self).__init__()
-        for attr, value in configs.iteritems():
+        for attr, value in kwargs.iteritems():
             setattr(self, attr, value)
         self.config()
 

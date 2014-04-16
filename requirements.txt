@@ -5,5 +5,5 @@ lxml==3.3.3
 gevent==1.0
 pytest==2.5.2
 ipdb==0.8
-ipython==1.2.1
+ipython==2.0.0
 -e git+https://github.com/gimbel0893/bingsearch.git@v0.4#egg=bingsearch
