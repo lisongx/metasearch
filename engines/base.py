@@ -4,7 +4,11 @@ import requests
 
 
 class EngineBase(object):
+
     _metaclass__ = ABCMeta
+
+    # the weight of search engine, from 0 - 10
+    weight = 5
 
     def __init__(self, **kwargs):
         super(EngineBase, self).__init__()
@@ -22,7 +26,7 @@ class EngineBase(object):
     def config(self):
         pass
 
-    # params clean
+    # params clean and send the request to the search engine
     def _send_request(self, query, **kwargs):
         pass
 
@@ -42,7 +46,7 @@ class RequestEngine(EngineBase):
 
 
 class ResultItemBase(object):
-    source = "base"
+    source = EngineBase
 
     def __new__(cls, *args, **kwargs):
             obj = object.__new__(cls, *args, **kwargs)
