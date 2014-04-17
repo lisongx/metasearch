@@ -1,28 +1,27 @@
-import unittest
+import pytest
+
 from engines import DuckgoEngine
 
 
-class TestDuckgoEngine(unittest.TestCase):
+@pytest.fixture(scope="module")
+def engine():
+    engine = DuckgoEngine()
+    return engine
 
-    def setUp(self):
-        self.engine = DuckgoEngine()
-        self.results = self.engine.search("python")
+@pytest.fixture(scope="module")
+def results(engine):
+    return engine.search("python")
 
-    def test_request(self):
-        results = self.results
-        self.assertTrue(isinstance(results, list))
+def test_request(results):
+    assert isinstance(results, list)
 
-    def test_result_item(self):
-        item = self.results[0]
-        self.assertTrue(hasattr(item, "title"))
-        self.assertTrue(hasattr(item, "url"))
-        self.assertTrue(hasattr(item, "description"))
-        self.assertTrue(item.source, 'duckduckgo')
+def test_result_item(results):
+    item = results[0]
+    assert hasattr(item, "title")
+    assert hasattr(item, "url")
+    assert hasattr(item, "description")
+    assert item.source.name == 'duckduckgo'
 
-    def test_result_priority(self):
-        item = self.results[1]
-        self.assertEquals(item.priority, 1)
-
-
-if __name__ == '__main__':
-    unittest.main()
+def test_result_priority(results):
+    item = results[1]
+    assert item.priority == 1

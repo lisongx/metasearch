@@ -1,32 +1,28 @@
-import os, unittest
+import os
+import pytest
 from engines import FarooEngine
 
+@pytest.fixture(scope="module")
+def engine():
+    engine = FarooEngine(api_key=os.environ["FAROO_API_KEY"])
+    return engine
 
-class TestFarooEngine(unittest.TestCase):
-
-    def setUp(self):
-        self.engine = FarooEngine(api_key=os.environ["FAROO_API_KEY"])
-        self.results = self.engine.search("python")
-
-    def test_request(self):
-        results = self.results
-        self.assertTrue(isinstance(results, list))
-
-    def test_result_item(self):
-        item = self.results[0]
-        self.assertTrue(hasattr(item, "title"))
-        self.assertTrue(hasattr(item, "url"))
-        self.assertTrue(hasattr(item, "description"))        
-        self.assertTrue(item.source, 'faroo')
-
-    def test_result_priority(self):
-        item = self.results[1]
-        self.assertEquals(item.priority, 1)
-
-    def test_count(self):
-        results = self.engine.search("python", limit=5)
-        self.assertEquals(len(results), 5)
+@pytest.fixture(scope="module")
+def results(engine):
+    return engine.search("python")
 
 
-if __name__ == '__main__':
-    unittest.main()
+def test_result_item(results):
+    item = results[0]
+    assert hasattr(item, "title")
+    assert hasattr(item, "url")
+    assert hasattr(item, "description")
+    assert item.source.name == 'faroo'
+
+def test_result_priority(results):
+    item = results[1]
+    assert item.priority == 1
+
+def test_count(engine):
+    results = engine.search("python", limit=5)
+    assert len(results) == 5

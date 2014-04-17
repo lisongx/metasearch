@@ -1,31 +1,34 @@
-import os, unittest
+import os
+import pytest
 from engines import YandexEngine
 
 
-class TestYandexEngine(unittest.TestCase):
+import os
+import pytest
+from engines import FarooEngine
 
-    def setUp(self):
-        self.engine = YandexEngine(
-            api_key=os.environ["YANDEX_API_KEY"],
-            username=os.environ["YANDEX_USER_NAME"]
-        )
-        self.results = self.engine.search("python")
+@pytest.fixture(scope="module")
+def engine():
+    engine = YandexEngine(
+        api_key=os.environ["YANDEX_API_KEY"],
+        username=os.environ["YANDEX_USER_NAME"]
+    )
+    return engine
 
-    def test_request(self):
-        results = self.results
-        self.assertTrue(isinstance(results, list))
+@pytest.fixture(scope="module")
+def results(engine):
+    return engine.search("python")
 
-    def test_result_item(self):
-        item = self.results[0]
-        self.assertTrue(hasattr(item, "title"))
-        self.assertTrue(hasattr(item, "url"))
-        self.assertTrue(hasattr(item, "description"))
-        self.assertTrue(item.source, 'yandex')
+def test_results_is_list(results):
+    assert isinstance(results, list)
 
-    def test_result_priority(self):
-        item = self.results[1]
-        self.assertEquals(item.priority, 1)
+def test_result_item(results):
+    item = results[0]
+    assert hasattr(item, "title")
+    assert hasattr(item, "url")
+    assert hasattr(item, "description")
+    assert item.source.name == 'yandex'
 
-
-if __name__ == '__main__':
-    unittest.main()
+def test_result_priority(results):
+    item = results[1]
+    assert item.priority == 1

@@ -1,32 +1,33 @@
-import os, unittest
+import os
+import pytest
+
 from engines import BingEngine
 
 
-class TestBingEngine(unittest.TestCase):
+@pytest.fixture(scope="module")
+def engine():
+    engine = BingEngine(api_key=os.environ["BING_API_KEY"])
+    return engine
 
-    def setUp(self):
-        self.engine = BingEngine(api_key=os.environ["BING_API_KEY"])
-        self.results = self.engine.search("python")
+@pytest.fixture(scope="module")
+def results(engine):
+    return engine.search("python")
 
-    def test_request(self):
-        results = self.results
-        self.assertTrue(isinstance(results, list))
+def test_request(results):
+    assert isinstance(results, list)
 
-    def test_result_item(self):
-        item = self.results[0]
-        self.assertTrue(hasattr(item, "title"))
-        self.assertTrue(hasattr(item, "url"))
-        self.assertTrue(hasattr(item, "description"))        
-        self.assertTrue(item.source, 'bing')
+def test_result_item(results):
+    item = results[0]
+    assert hasattr(item, "title")
+    assert hasattr(item, "url")
+    assert hasattr(item, "description")
+    assert hasattr(item, "description")
+    assert item.source.name == 'bing'
 
-    def test_result_priority(self):
-        item = self.results[2]
-        self.assertEquals(item.priority, 2)
+def test_result_priority(results):
+    item = results[2]
+    assert item.priority == 2
 
-    def test_count(self):
-        results = self.engine.search("python", limit=5)
-        self.assertEquals(len(results), 5)
-
-
-if __name__ == '__main__':
-    unittest.main()
+def test_count(engine):
+    results = engine.search("python", limit=5)
+    assert len(results) == 5

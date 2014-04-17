@@ -1,7 +1,9 @@
-import os, unittest
+import os
+import pytest
 from engines import BingEngine, DuckgoEngine, FarooEngine, YandexEngine
 from engines.base import ResultItemBase
 from aggregator import Aggregator
+
 
 bing = BingEngine(api_key=os.environ["BING_API_KEY"])
 duckduckgo = DuckgoEngine()
@@ -11,34 +13,38 @@ yandex = YandexEngine(
         username=os.environ["YANDEX_USER_NAME"]
     )
 
+@pytest.fixture(scope="module")
+def engine():
+    engine = Aggregator()
+    return engine
 
-class TestFarooEngine(unittest.TestCase):
+@pytest.fixture(scope="module")
+def results(engine):
+    return engine.search("python")
 
-    def setUp(self):
-        self.engine = Aggregator()
+def test_add(engine):
+    engine.add_engine(bing)
+    engine.add_engine(duckduckgo)        
+    assert len(engine._engines) == 2
+    engine._engines = []
 
-    def test_add(self):
-        self.engine.add_engine(bing)
-        self.engine.add_engine(duckduckgo)        
-        self.assertEquals(len(self.engine._engines), 2)
+def test_adds(engine):
+    engine.add_engines([duckduckgo, yandex, faroo])
+    assert len(engine._engines) == 3
+    engine._engines = []
 
-    def test_add_fail(self):
-        self.engine.add_engine(faroo)
-        self.assertRaises(Exception, self.engine.add_engine, faroo)
+def test_add_fail(engine):
+    engine.add_engine(faroo)
+    with pytest.raises(Exception):
+        engine.add_engine(faroo)
+    engine._engines = []
 
-    def test_remove_engine(self):
-        self.engine.add_engine(faroo)
-        self.engine.remove_engine('faroo')
-        self.assertEquals(len(self.engine._engines), 0)
+def test_remove_engine(engine):
+    engine.add_engine(faroo)
+    engine.remove_engine('faroo')
+    assert len(engine._engines) == 0
 
-    def test_search(self):
-        self.engine.add_engines([duckduckgo, yandex, faroo])
-        results = self.engine.search("python")
-        self.assertTrue(isinstance(results[0][0], ResultItemBase))
-
-    def tearDown(self):
-        self.engine._engines = []
-
-
-if __name__ == '__main__':
-    unittest.main()
+def test_search(engine):
+    engine.add_engines([duckduckgo, yandex, faroo])
+    results = engine.search("python")
+    assert isinstance(results[0][0], ResultItemBase)
