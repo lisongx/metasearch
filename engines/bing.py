@@ -8,7 +8,7 @@ class BingEngine(EngineBase):
     """
     name = "bing"
 
-    def config(self):
+    def _post_config(self):
         self.bing = BingSearch(self.api_key)
 
     def _send_request(self, query, **kwargs):

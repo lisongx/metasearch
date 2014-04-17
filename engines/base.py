@@ -12,18 +12,21 @@ class EngineBase(object):
 
     def __init__(self, **kwargs):
         super(EngineBase, self).__init__()
-        for attr, value in kwargs.iteritems():
-            setattr(self, attr, value)
-        self.config()
+        self.config(**kwargs)
 
     def search(self, query, **kwargs):
         raw_data = self._send_request(query, **kwargs)
         cleaned_data = self._clean_raw_data(raw_data)
         results = self.fill_priority(cleaned_data)
         return results
-    
-    # configis
-    def config(self):
+
+    def config(self, **kwargs):
+        for attr, value in kwargs.iteritems():
+            setattr(self, attr, value)
+        self._post_config()
+
+    # init api library or client
+    def _post_config(self):
         pass
 
     # params clean and send the request to the search engine

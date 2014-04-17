@@ -8,7 +8,7 @@ class YandexEngine(EngineBase):
     """
     name = "yandex"
 
-    def config(self):
+    def _post_config(self):
         self.yasearch = YaSearch(self.username, self.api_key)
 
     def _send_request(self, query, **kwargs):
