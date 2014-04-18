@@ -16,7 +16,7 @@ class YandexEngine(EngineBase):
 
     def _clean_raw_data(self, raw_data):
         if raw_data.error is None:
-            results = [YandexResultItem(item) for item in raw_data.items]
+            results = [YandexResultItem.new(item) for item in raw_data.items]
             return results
         else:
             return []

@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 import requests
+import urlnorm
 
 
 class EngineBase(object):
@@ -51,7 +52,12 @@ class RequestEngine(EngineBase):
 class ResultItemBase(object):
     source = EngineBase
 
-    def __new__(cls, *args, **kwargs):
-            obj = object.__new__(cls, *args, **kwargs)
-            obj.source = cls.source
-            return obj
+    @classmethod
+    def new(cls, data):
+        obj = cls(data)
+        obj.source = cls.source
+        obj.duplicates = 0
+        # normalize url
+        if hasattr(obj, 'url'):
+            obj.url = urlnorm.norm(obj.url)
+        return obj

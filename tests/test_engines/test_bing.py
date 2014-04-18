@@ -21,7 +21,6 @@ def test_result_item(results):
     assert hasattr(item, "title")
     assert hasattr(item, "url")
     assert hasattr(item, "description")
-    assert hasattr(item, "description")
     assert item.source.name == 'bing'
 
 def test_result_priority(results):

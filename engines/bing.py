@@ -18,7 +18,7 @@ class BingEngine(EngineBase):
         return self.bing.search(query, **kwargs)
 
     def _clean_raw_data(self, raw_data):
-        results = [BingResultItem(item) for item in raw_data.results]
+        results = [BingResultItem.new(item) for item in raw_data.results]
         return results
 
 

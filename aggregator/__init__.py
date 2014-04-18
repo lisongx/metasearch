@@ -1,6 +1,11 @@
+from operator import add, attrgetter
+from itertools import groupby
+
 import gevent
+import urlnorm
+# gevent's monkey patch
 from gevent import monkey
-monkey.patch_socket()
+monkey.patch_all()
 
 from engines.base import EngineBase
 
@@ -32,8 +37,21 @@ class Aggregator(object):
                 self._engines.remove(item)
                 break
     
-    def search(self, query, **kwarg):
-        jobs = [gevent.spawn(engine.search, query, **kwarg) for engine in self._engines]
+    def search(self, query, **kwargs):
+        raw_results = self._search(query, **kwargs)
+        results = self._clean_duplicate(raw_results)
+        return results
+
+    def _search(self, query, **kwargs):
+        jobs = [gevent.spawn(engine.search, query, **kwargs) for engine in self._engines]
         gevent.joinall(jobs)
-        results = map(lambda x: x.value, jobs)
+        return reduce(add, map(lambda x: x.value, jobs))
+
+    def _clean_duplicate(self, raw_results):
+        results = []
+        for _, g in groupby(raw_results, attrgetter("url")):
+            gs = list(g)
+            item = gs[0]
+            item.duplicates = len(gs) - 1
+            results.append(item)
         return results

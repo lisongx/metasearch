@@ -25,7 +25,7 @@ class DuckgoEngine(EngineBase):
         else:
             return []
 
-        results  = [DuckGoResultItem(item) for item in results]
+        results  = [DuckGoResultItem.new(item) for item in results]
         return filter(lambda x: x.is_result, results)
 
 
@@ -36,8 +36,8 @@ class DuckGoResultItem(ResultItemBase):
     def __init__(self, data):
         # test if the element is  an actual result
         if hasattr(data, 'text') and hasattr(data, 'url'):
-            self.url = data.text
-            self.title = data.url
+            self.url = data.url
+            self.title = data.text
             self.description = None
             try:
                 self.image = data.icon.url

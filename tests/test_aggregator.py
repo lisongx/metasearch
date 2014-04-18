@@ -47,4 +47,4 @@ def test_remove_engine(engine):
 def test_search(engine):
     engine.add_engines([duckduckgo, yandex, faroo])
     results = engine.search("python")
-    assert isinstance(results[0][0], ResultItemBase)
+    assert isinstance(results[0], ResultItemBase)
