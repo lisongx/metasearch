@@ -53,8 +53,8 @@ class ResultItemBase(object):
     source = EngineBase
 
     @classmethod
-    def new(cls, data):
-        obj = cls(data)
+    def new(cls, *args, **kwargs):
+        obj = cls(*args, **kwargs)
         obj.source = cls.source
         obj.duplicates = 0
         # normalize url
