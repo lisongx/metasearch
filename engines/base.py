@@ -57,7 +57,11 @@ class ResultItemBase(object):
         obj = cls(*args, **kwargs)
         obj.source = cls.source
         obj.duplicates = 0
+        obj.priority = 0
         # normalize url
         if hasattr(obj, 'url'):
             obj.url = urlnorm.norm(obj.url)
         return obj
+
+    def __unicode__(self):
+        return u"%s/priority-%s/duplicates-%s" % (self.__class__, self.priority, self.duplicates)
