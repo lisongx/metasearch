@@ -23,6 +23,9 @@ class Aggregator(object):
         for engine in engines:
             self.add_engine(engine)
 
+    def __getitem__(self, key):
+        return self._engines[key]
+
     def _check_engine(self, engine):
         if not isinstance(engine, EngineBase):
             raise Exception("Need to be an engine!")

@@ -1,7 +1,7 @@
 import os
 import pytest
 from engines import BingEngine, DuckgoEngine, FarooEngine, YandexEngine
-from engines.base import ResultItemBase
+from engines.base import EngineBase, ResultItemBase
 from aggregator import Aggregator
 
 
@@ -43,6 +43,11 @@ def test_remove_engine(engine):
     engine.add_engine(faroo)
     engine.remove_engine('faroo')
     assert len(engine._engines) == 0
+
+def test_get_a_single_engine(engine):
+    engine.add_engine(faroo)
+    assert isinstance(engine['faroo'], EngineBase)
+    engine._engines = {}
 
 def test_search(engine):
     engine.add_engines([duckduckgo, yandex, faroo])
