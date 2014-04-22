@@ -58,5 +58,5 @@ class Aggregator(object):
         return results
 
     def _sort(self, results):
-        keyfunc = lambda x: (1.0 * x.priority) / (x.source.weight + x.duplicates*3)
+        keyfunc = lambda x: (1.0 * x.priority) / (x.source.weight + x.duplicates)
         return sorted(results, key=keyfunc)

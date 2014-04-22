@@ -8,8 +8,8 @@ class EngineBase(object):
 
     _metaclass__ = ABCMeta
 
-    # the weight of search engine, from 0 - 10
-    weight = 5
+    # the weight of search engine, from 0 - 1.0
+    weight = 0.5
 
     def __init__(self, **kwargs):
         super(EngineBase, self).__init__()
