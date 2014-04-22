@@ -13,37 +13,35 @@ from engines.base import EngineBase
 class Aggregator(object):
 
     def __init__(self):
-        self._engines  = []
+        self._engines  = {}
 
     def add_engine(self, engine):
         self._check_engine(engine)
-        self._engines.append(engine)
+        self._engines[engine.name] = engine
 
     def add_engines(self, engines):
         for engine in engines:
-            self._engines.append(engine)
+            self.add_engine(engine)
 
     def _check_engine(self, engine):
         if not isinstance(engine, EngineBase):
             raise Exception("Need to be an engine!")
 
-        for item in self._engines:
-            if item.__class__ == engine.__class__:
-                raise Exception("Engine already exist!")
+        if engine.name in self._engines.keys():
+            raise Exception("Engine already exist!")
 
     def remove_engine(self, engine_name):
-        for item in self._engines:
-            if item.name  == engine_name:
-                self._engines.remove(item)
-                break
-    
+        self._engines.pop(engine_name)
+
     def search(self, query, **kwargs):
         raw_results = self._search(query, **kwargs)
-        results = self._clean_duplicate(raw_results)
+        uniq_results = self._clean_duplicate(raw_results)
+        results = self._sort(uniq_results)
         return results
 
     def _search(self, query, **kwargs):
-        jobs = [gevent.spawn(engine.search, query, **kwargs) for engine in self._engines]
+        jobs = [gevent.spawn(engine.search, query, **kwargs) 
+                for engine in self._engines.values()]
         gevent.joinall(jobs)
         return reduce(add, map(lambda x: x.value, jobs))
 

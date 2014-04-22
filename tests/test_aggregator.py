@@ -26,18 +26,18 @@ def test_add(engine):
     engine.add_engine(bing)
     engine.add_engine(duckduckgo)        
     assert len(engine._engines) == 2
-    engine._engines = []
+    engine._engines = {}
 
 def test_adds(engine):
     engine.add_engines([duckduckgo, yandex, faroo])
     assert len(engine._engines) == 3
-    engine._engines = []
+    engine._engines = {}
 
 def test_add_fail(engine):
     engine.add_engine(faroo)
     with pytest.raises(Exception):
         engine.add_engine(faroo)
-    engine._engines = []
+    engine._engines = {}
 
 def test_remove_engine(engine):
     engine.add_engine(faroo)
