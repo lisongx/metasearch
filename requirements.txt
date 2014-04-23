@@ -3,6 +3,8 @@ wolframalpha==1.0.2
 requests==2.2.1
 urlnorm==1.1.2
 lxml==3.3.3
+Flask-API==0.6.2
+Flask==0.10.1
 gevent==1.0
 pytest==2.5.2
 ipdb==0.8

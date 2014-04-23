@@ -6,6 +6,8 @@ from .base import EngineBase, ResultItemBase
 class DuckgoEngine(EngineBase):
 
     name = "duckduckgo"
+    url = "http://www.duckduckgo.com/"
+    weight = 0.5
 
     TYPES = {
         'ANSWER': u'answer',

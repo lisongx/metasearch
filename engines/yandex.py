@@ -7,6 +7,8 @@ class YandexEngine(EngineBase):
        * need init with a username and api_key
     """
     name = "yandex"
+    weight = 0.3
+    url = "http://www.yandex.com/"
 
     def _post_config(self):
         self.yasearch = YaSearch(self.username, self.api_key)

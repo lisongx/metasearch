@@ -6,7 +6,10 @@ class BingEngine(EngineBase):
     """Bing.
        * need init with a api_key
     """
+
     name = "bing"
+    url = "http://www.bing.com/"
+    weight = 0.7
 
     def _post_config(self):
         self.bing = BingSearch(self.api_key)

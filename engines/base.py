@@ -43,6 +43,15 @@ class EngineBase(object):
             item.priority = i
         return data
 
+    @property
+    def metadata(self):
+        return {
+            "name": self.name,
+            "url": self.url,
+            "default_weight": self.weight
+        }
+
+
 
 class RequestEngine(EngineBase):
     pass

@@ -8,6 +8,9 @@ class FarooEngine(RequestEngine):
        * need init with a api_key
     """
     name = "faroo"
+    url = "http://www.faroo.com/"
+    weight = 0.4
+
     REQUEST_PATH = "http://www.faroo.com/api"
 
     def _send_request(self, query, **kwargs):
