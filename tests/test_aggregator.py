@@ -15,7 +15,7 @@ yandex = YandexEngine(
 
 @pytest.fixture(scope="module")
 def engine():
-    engine = Aggregator()
+    engine = Aggregator
     return engine
 
 @pytest.fixture(scope="module")
@@ -49,7 +49,14 @@ def test_get_a_single_engine(engine):
     assert isinstance(engine['faroo'], EngineBase)
     engine._engines = {}
 
-def test_search(engine):
+def test_set_weights(engine):
     engine.add_engines([duckduckgo, yandex, faroo])
-    results = engine.search("python")
-    assert isinstance(results[0], ResultItemBase)
+    engine.set_weights({
+        "duckduckgo": 0.3,
+        "yandex": 0.9,
+        "faroo": 0.1
+    })
+    assert engine['duckduckgo'].weight == 0.3
+    assert engine['yandex'].weight == 0.9
+    assert engine['faroo'].weight == 0.1
+    engine._engines = {}

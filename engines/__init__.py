@@ -15,4 +15,9 @@ yandex = YandexEngine(
     )
 
 
-ALL_SUPPORT_ENGINES = [bing, duckduckgo, faroo, yandex]
+ALL_SUPPORT_ENGINES = [
+    bing,
+    duckduckgo,
+    faroo,
+    yandex
+]

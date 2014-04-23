@@ -8,7 +8,7 @@ from gevent import monkey
 monkey.patch_all()
 
 from engines.base import EngineBase
-
+from engines import ALL_SUPPORT_ENGINES
 
 class Aggregator(object):
 
@@ -23,14 +23,25 @@ class Aggregator(object):
         for engine in engines:
             self.add_engine(engine)
 
+    def set_weights(self, weights):
+        for name, weight in weights.iteritems():
+            if self._check_engine_exist_by_name(name):
+                self._engines[name].weight = weight
+
     def __getitem__(self, key):
         return self._engines[key]
+
+    def _check_engine_exist_by_name(self, engine_name):
+        if engine_name in self._engines.keys():
+            return True
+        else:
+            return False
 
     def _check_engine(self, engine):
         if not isinstance(engine, EngineBase):
             raise Exception("Need to be an engine!")
 
-        if engine.name in self._engines.keys():
+        if self._check_engine_exist_by_name(engine.name):
             raise Exception("Engine already exist!")
 
     def remove_engine(self, engine_name):
@@ -60,3 +71,12 @@ class Aggregator(object):
     def _sort(self, results):
         keyfunc = lambda x: (1.0 * x.priority) / (x.source.weight + x.duplicates)
         return sorted(results, key=keyfunc)
+
+
+meta_engine = Aggregator()
+meta_engine.add_engines(ALL_SUPPORT_ENGINES)
+
+__all__ = [
+    "Aggregator",
+    "meta_engine"
+]
