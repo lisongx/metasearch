@@ -2,7 +2,6 @@ import os
 import pytest
 from engines import BingEngine, DuckgoEngine, FarooEngine, YandexEngine
 from engines.base import EngineBase, ResultItemBase
-from aggregator import Aggregator
 
 
 bing = BingEngine(api_key=os.environ["BING_API_KEY"])
@@ -15,7 +14,8 @@ yandex = YandexEngine(
 
 @pytest.fixture(scope="module")
 def engine():
-    engine = Aggregator
+    from aggregator import Aggregator
+    engine = Aggregator()
     return engine
 
 @pytest.fixture(scope="module")

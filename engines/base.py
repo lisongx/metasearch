@@ -43,12 +43,11 @@ class EngineBase(object):
             item.priority = i
         return data
 
-    @property
-    def metadata(self):
+    def as_json(self):
         return {
             "name": self.name,
             "url": self.url,
-            "default_weight": self.weight
+            "weight": self.weight
         }
 
 
@@ -74,3 +73,12 @@ class ResultItemBase(object):
 
     def __unicode__(self):
         return u"%s/priority-%s/duplicates-%s" % (self.__class__, self.priority, self.duplicates)
+
+    def as_json(self):
+        return {
+            "title": self.title
+            "url": self.url,
+            "description": self.description,
+            "image": self.image,
+            "source": self.source.as_json()
+        }
