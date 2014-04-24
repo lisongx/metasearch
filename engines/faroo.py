@@ -12,6 +12,7 @@ class FarooEngine(RequestEngine):
     weight = 0.4
 
     REQUEST_PATH = "http://www.faroo.com/api"
+    RESULT_MAX_LIMIT = 10
 
     def _send_request(self, query, **kwargs):
         kwargs.update({

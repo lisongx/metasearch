@@ -50,12 +50,22 @@ class Aggregator(object):
     def search(self, query, **kwargs):
         raw_results = self._search(query, **kwargs)
         uniq_results = self._clean_duplicate(raw_results)
-        results = self._sort(uniq_results)
+        results = self._sort(uniq_results, **kwargs)
         return results
 
     def _search(self, query, **kwargs):
+        engine_names = kwargs.get("engines")
+
+        if engine_names:
+            kwargs.pop('engines')
+            engines = [
+                engine
+                for name, engine in self._engines.iteritems()
+                if name in engine_names
+            ]
+
         jobs = [gevent.spawn(engine.search, query, **kwargs) 
-                for engine in self._engines.values()]
+                for engine in engines]
         gevent.joinall(jobs)
         return reduce(add, map(lambda x: x.value, jobs))
 
@@ -68,7 +78,7 @@ class Aggregator(object):
             results.append(item)
         return results
 
-    def _sort(self, results):
+    def _sort(self, results, **kwargs):
         keyfunc = lambda x: (1.0 * x.priority) / (x.source.weight + x.duplicates)
         return sorted(results, key=keyfunc)
 

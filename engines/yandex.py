@@ -9,6 +9,7 @@ class YandexEngine(EngineBase):
     name = "yandex"
     weight = 0.3
     url = "http://www.yandex.com/"
+    RESULT_MAX_LIMIT = 10
 
     def _post_config(self):
         self.yasearch = YaSearch(self.username, self.api_key)

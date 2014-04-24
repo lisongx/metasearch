@@ -10,6 +10,7 @@ class BingEngine(EngineBase):
     name = "bing"
     url = "http://www.bing.com/"
     weight = 0.7
+    RESULT_MAX_LIMIT = 50
 
     def _post_config(self):
         self.bing = BingSearch(self.api_key)

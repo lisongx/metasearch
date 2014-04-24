@@ -5,6 +5,7 @@ urlnorm==1.1.2
 lxml==3.3.3
 Flask-API==0.6.2
 Flask==0.10.1
+werkzeug==
 gevent==1.0
 pytest==2.5.2
 ipdb==0.8

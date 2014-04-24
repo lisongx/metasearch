@@ -10,12 +10,17 @@ class EngineBase(object):
 
     # the weight of search engine, from 0 - 1.0
     weight = 0.5
+    RESULT_MAX_LIMIT = 10
 
     def __init__(self, **kwargs):
         super(EngineBase, self).__init__()
         self.config(**kwargs)
 
     def search(self, query, **kwargs):
+        # transform page to start
+        if "page" in kwargs:
+            kwargs["start"] =  (kwargs["page"] - 1) * self.RESULT_MAX_LIMIT
+
         raw_data = self._send_request(query, **kwargs)
         cleaned_data = self._clean_raw_data(raw_data)
         results = self.fill_priority(cleaned_data)
@@ -31,6 +36,9 @@ class EngineBase(object):
         pass
 
     # params clean and send the request to the search engine
+    # --- kwargs ---
+    # start: the start item
+    # limit: the results limit
     def _send_request(self, query, **kwargs):
         pass
 
@@ -43,6 +51,7 @@ class EngineBase(object):
             item.priority = i
         return data
 
+    @classmethod
     def as_json(self):
         return {
             "name": self.name,
@@ -76,7 +85,7 @@ class ResultItemBase(object):
 
     def as_json(self):
         return {
-            "title": self.title
+            "title": self.title,
             "url": self.url,
             "description": self.description,
             "image": self.image,
