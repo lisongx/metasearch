@@ -23,22 +23,24 @@ def search():
     except Exception as e:
         raise e
 
-
+    kwargs  = {}
     q = str(request.args.get('q', ''))
     engines = request.args.get("engines", '')
 
     if engines:
         engines = engines.split(',')
-    else:
-        engines = []
+        kwargs["engines"] = engines
 
     page = int(request.data.get('page', 0))
 
+    if page > 0:
+        kwargs["page"] = page
+
     if weights:
         meta_engine.set_weights(weights)
-    
+
     if q:
-        results = meta_engine.search(q, engines=engines)
+        results = meta_engine.search(q, **kwargs)
         results =  [item.as_json() for item in results]
         return results
     else:

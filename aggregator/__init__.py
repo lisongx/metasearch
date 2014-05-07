@@ -63,6 +63,8 @@ class Aggregator(object):
                 for name, engine in self._engines.iteritems()
                 if name in engine_names
             ]
+        else:
+            engines = self._engines.values()
 
         jobs = [gevent.spawn(engine.search, query, **kwargs) 
                 for engine in engines]
