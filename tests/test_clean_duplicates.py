@@ -1,5 +1,5 @@
 import pytest
-from tests import Result
+from tests import Result, TestEngine
 
 
 @pytest.fixture(scope="module")
@@ -23,7 +23,7 @@ def raw_results():
             url = u"http://www.bing.com/"
         elif i < 30:
             url = u"http://www.reddit.com/"
-        result = Result.new(url, u"test title", u"test desc")
+        result = Result.new(url, u"test title", u"test desc", source=TestEngine())
         results.append(result)
 
     return results

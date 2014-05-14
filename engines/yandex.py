@@ -19,15 +19,13 @@ class YandexEngine(EngineBase):
 
     def _clean_raw_data(self, raw_data):
         if raw_data.error is None:
-            results = [YandexResultItem.new(item) for item in raw_data.items]
+            results = [YandexResultItem.new(item, source=self) for item in raw_data.items]
             return results
         else:
             return []
 
 
 class YandexResultItem(ResultItemBase):
-
-    source = YandexEngine
 
     def __init__(self, data):
         self.url = data.url

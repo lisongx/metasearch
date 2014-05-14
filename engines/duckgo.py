@@ -27,13 +27,11 @@ class DuckgoEngine(EngineBase):
         else:
             return []
 
-        results  = [DuckGoResultItem.new(item) for item in results]
+        results  = [DuckGoResultItem.new(item, source=self) for item in results]
         return filter(lambda x: x.is_result, results)
 
 
 class DuckGoResultItem(ResultItemBase):
-
-    source = DuckgoEngine
 
     def __init__(self, data):
         # test if the element is  an actual result

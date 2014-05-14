@@ -1,8 +1,12 @@
+# -*- coding: utf-8 -*-
+
 from engines import ALL_SUPPORT_ENGINES
 from aggregator import meta_engine
 
 from flask import request, url_for
 from flask.ext.api import FlaskAPI, status, exceptions
+
+from .utils import include_chinese
 
 app = FlaskAPI(__name__)
 
@@ -24,7 +28,11 @@ def search():
         raise e
 
     kwargs  = {}
-    q = str(request.args.get('q', ''))
+    q = request.args.get('q', '')
+
+    if (include_chinese(q)):
+        print "yes"
+    q = q.encode('utf-8')
     engines = request.args.get("engines", '')
 
     if engines:

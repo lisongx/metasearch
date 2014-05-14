@@ -29,12 +29,11 @@ class FarooEngine(RequestEngine):
         return r.json()
 
     def _clean_raw_data(self, raw_data):
-        results = [FarooResultItem.new(item) for item in raw_data["results"]]
+        results = [FarooResultItem.new(item, source=self) for item in raw_data["results"]]
         return results
 
 
 class FarooResultItem(ResultItemBase):
-    source = FarooEngine
 
     def __init__(self, data):
         self.url = data["url"]

@@ -67,12 +67,11 @@ class RequestEngine(EngineBase):
 
 
 class ResultItemBase(object):
-    source = EngineBase
 
     @classmethod
     def new(cls, *args, **kwargs):
-        obj = cls(*args, **kwargs)
-        obj.source = cls.source
+        obj = cls(*args)
+        obj.source = kwargs['source']
         obj.duplicates = 0
         obj.priority = 0
         # normalize url

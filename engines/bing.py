@@ -22,13 +22,11 @@ class BingEngine(EngineBase):
         return self.bing.search(query, **kwargs)
 
     def _clean_raw_data(self, raw_data):
-        results = [BingResultItem.new(item) for item in raw_data.results]
+        results = [BingResultItem.new(item, source=self) for item in raw_data.results]
         return results
 
 
 class BingResultItem(ResultItemBase):
-
-    source = BingEngine
 
     def __init__(self, data):
         self.url = data.url

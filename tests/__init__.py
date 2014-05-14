@@ -13,7 +13,7 @@ class TestEngine(EngineBase):
 
 
 class Result(ResultItemBase):
-    source = TestEngine
+    # source = TestEngine
 
     def __init__(self, url, title, description, weight=5):
         self.url = url
