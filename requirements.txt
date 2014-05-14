@@ -1,11 +1,13 @@
 duckduckgo2==0.242
 wolframalpha==1.0.2
 requests==2.2.1
+wikipedia==1.1
+svn+http://pygoogle.googlecode.com/svn/trunk#egg=pygoogle
 urlnorm==1.1.2
 lxml==3.3.3
 Flask-API==0.6.2
 Flask==0.10.1
-werkzeug==
+langid==1.1.4dev
 gevent==1.0
 pytest==2.5.2
 ipdb==0.8

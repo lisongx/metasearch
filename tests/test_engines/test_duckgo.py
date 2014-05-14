@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pytest
 
 from engines import DuckgoEngine
@@ -12,8 +14,15 @@ def engine():
 def results(engine):
     return engine.search("python")
 
+@pytest.fixture(scope="module")
+def chinese_results(engine):
+    return engine.search(u"豆瓣")
+
 def test_request(results):
     assert isinstance(results, list)
+
+def test_chinese_request(chinese_results):
+    assert isinstance(chinese_results, list)
 
 def test_result_item(results):
     item = results[0]

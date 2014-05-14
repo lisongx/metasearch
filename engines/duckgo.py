@@ -15,7 +15,7 @@ class DuckgoEngine(EngineBase):
     }
 
     def _send_request(self, query, **kwargs):
-        return duckduckgo.query(query)
+        return duckduckgo.query(query.encode('utf-8'))
 
     def _clean_raw_data(self, raw_data):
         results = []

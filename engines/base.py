@@ -1,5 +1,4 @@
 from abc import ABCMeta, abstractmethod
-
 import requests
 import urlnorm
 
@@ -9,6 +8,7 @@ class EngineBase(object):
     _metaclass__ = ABCMeta
 
     # the weight of search engine, from 0 - 1.0
+    DEFAULT_LANG = "en"
     DEFAULT_WEIGHT = 0.5
     RESULT_MAX_LIMIT = 10
 
@@ -49,9 +49,9 @@ class EngineBase(object):
         return raw_data
 
     def fill_priority(self, data):
-        # 0 means biggest
+        # result order in their source engine
         for i, item in enumerate(data):
-            item.priority = i
+            item.priority = i + 1
         return data
 
     def as_json(self):

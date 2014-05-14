@@ -6,7 +6,7 @@ from aggregator import meta_engine
 from flask import request, url_for
 from flask.ext.api import FlaskAPI, status, exceptions
 
-from .utils import include_chinese
+from .utils import get_lang
 
 app = FlaskAPI(__name__)
 
@@ -18,6 +18,11 @@ def all_engines():
 
 @app.route('/search/', methods=['GET'])
 def search():
+    q = request.args.get('q', '')
+
+    if not q:
+        return []
+
     try:
         weights = {
             key.split('-')[1]: float(value)
@@ -26,12 +31,15 @@ def search():
         }
     except Exception as e:
         raise e
-    kwargs  = {}
-    q = request.args.get('q', '')
 
-    if (include_chinese(q)):
-        print "yes"
-    q = q.encode('utf-8')
+    kwargs  = {}
+
+    #  get the query text's language first from querystring, then guess
+    lang = request.args.get('lang', '')
+    if not lang:
+        lang = get_lang(q)
+    kwargs["lang"] = lang
+
     engines = request.args.get("engines", '')
 
     if engines:
@@ -43,13 +51,9 @@ def search():
     if page > 0:
         kwargs["page"] = page
 
-    print weights
     if weights:
         meta_engine.set_weights(weights)
 
-    if q:
-        results = meta_engine.search(q, **kwargs)
-        results =  [item.as_json() for item in results]
-        return results
-    else:
-        return []
+    results = meta_engine.search(q, **kwargs)
+    results =  [item.as_json() for item in results]
+    return results

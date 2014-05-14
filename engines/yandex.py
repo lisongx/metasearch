@@ -16,6 +16,7 @@ class YandexEngine(EngineBase):
         self.yasearch = YaSearch(self.username, self.api_key)
 
     def _send_request(self, query, **kwargs):
+        lang = kwargs.pop("lang", self.DEFAULT_LANG)
         return self.yasearch.search(query, **kwargs)
 
     def _clean_raw_data(self, raw_data):

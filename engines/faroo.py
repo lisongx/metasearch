@@ -18,7 +18,8 @@ class FarooEngine(RequestEngine):
         kwargs.update({
             "key": self.api_key,
             "q": query,
-            "src": "web"
+            "src": "web",
+            "l": kwargs.pop("lang", self.DEFAULT_LANG)
         })
 
         if "limit" in kwargs:

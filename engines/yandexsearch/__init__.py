@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Coded by Alexey Moskvin
 import urllib2, urllib
+import requests
 from xml.dom import minidom
 
 class SearchResultItem:
@@ -89,13 +90,25 @@ class YaSearch:
             request_suffix += (' site:%s' % site)
 
         page -= 1
-        query = unicode(query) + request_suffix
-        params = {'user' : self._api_user, 'key' : self._api_key}
-        search_url = u'http://xmlsearch.yandex.com/xmlsearch?' + urllib.urlencode(params)
-        post_data = self.REQUEST_TEMPLATE % (query.encode('utf-8'), str(page))
-        req = urllib2.Request(search_url, post_data)
-        response = urllib2.urlopen(req)
-        xml = response.read()
+        query = query + request_suffix
+        params = {
+            'user' : self._api_user,
+            'key' : self._api_key,
+            'query': query,
+            'page': page
+        }
+        # post_data = self.REQUEST_TEMPLATE % (query.encode('utf-8'), str(page))
+        # params["query"] = post_data        
+        search_url = 'http://xmlsearch.yandex.com/xmlsearch'
+        r = requests.get(search_url, params=params)
+        xml = r.content
+        # search_url = u'http://xmlsearch.yandex.com/xmlsearch?' + urllib.urlencode(params)
+        # post_data = self.REQUEST_TEMPLATE % (query.encode('utf-8'), str(page))
+        # params["query"] = post_data
+        # requests.get(search_url, )
+        # req = urllib2.Request(search_url, post_data)
+        # response = urllib2.urlopen(req)
+        # xml = response.read()
         dom = minidom.parseString(xml)
         items = []
         pages = 0

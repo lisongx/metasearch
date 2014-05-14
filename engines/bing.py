@@ -17,10 +17,11 @@ class BingEngine(EngineBase):
         self.bing = BingSearch(self.api_key)
 
     def _send_request(self, query, **kwargs):
+        lang = kwargs.pop("lang", self.DEFAULT_LANG)
         if "start" in kwargs:
             kwargs["offset"] = kwargs.pop("start")
 
-        return self.bing.search(query, **kwargs)
+        return self.bing.search(query.encode('utf-8'), **kwargs)
 
     def _clean_raw_data(self, raw_data):
         results = [BingResultItem.new(item, source=self) for item in raw_data.results]
