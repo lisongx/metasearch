@@ -9,8 +9,8 @@ class FarooEngine(RequestEngine):
     """
     name = "faroo"
     url = "http://www.faroo.com/"
-    weight = 0.4
 
+    DEFAULT_WEIGHT = 0.4
     REQUEST_PATH = "http://www.faroo.com/api"
     RESULT_MAX_LIMIT = 10
 

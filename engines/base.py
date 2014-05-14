@@ -9,7 +9,7 @@ class EngineBase(object):
     _metaclass__ = ABCMeta
 
     # the weight of search engine, from 0 - 1.0
-    weight = 0.5
+    DEFAULT_WEIGHT = 0.5
     RESULT_MAX_LIMIT = 10
 
     def __init__(self, **kwargs):
@@ -29,6 +29,9 @@ class EngineBase(object):
     def config(self, **kwargs):
         for attr, value in kwargs.iteritems():
             setattr(self, attr, value)
+        if "weight" not in kwargs:
+            self.weight = self.DEFAULT_WEIGHT
+
         self._post_config()
 
     # init api library or client
@@ -51,7 +54,6 @@ class EngineBase(object):
             item.priority = i
         return data
 
-    @classmethod
     def as_json(self):
         return {
             "name": self.name,

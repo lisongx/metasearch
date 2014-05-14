@@ -7,8 +7,8 @@ class DuckgoEngine(EngineBase):
 
     name = "duckduckgo"
     url = "http://www.duckduckgo.com/"
-    weight = 0.5
 
+    DEFAULT_WEIGHT = 0.5
     TYPES = {
         'ANSWER': u'answer',
         'DISAMBIGUATION': u'disambiguation'

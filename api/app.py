@@ -26,7 +26,6 @@ def search():
         }
     except Exception as e:
         raise e
-
     kwargs  = {}
     q = request.args.get('q', '')
 
@@ -44,6 +43,7 @@ def search():
     if page > 0:
         kwargs["page"] = page
 
+    print weights
     if weights:
         meta_engine.set_weights(weights)
 

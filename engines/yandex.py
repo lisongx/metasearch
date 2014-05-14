@@ -7,8 +7,9 @@ class YandexEngine(EngineBase):
        * need init with a username and api_key
     """
     name = "yandex"
-    weight = 0.3
     url = "http://www.yandex.com/"
+
+    DEFAULT_WEIGHT = 0.3
     RESULT_MAX_LIMIT = 10
 
     def _post_config(self):
